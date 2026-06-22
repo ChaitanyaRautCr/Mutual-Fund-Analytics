@@ -3,26 +3,34 @@ import os
 
 folder = "data/raw"
 
-files = [f for f in os.listdir(folder) if f.endswith(".csv")]
+# Get all CSV files
+files = [file for file in os.listdir(folder) if file.endswith(".csv")]
 
-print(f"Found {len(files)} CSV files")
+print(f"\nFound {len(files)} CSV files\n")
 
 for file in files:
-    path = os.path.join(folder, file)
+    try:
+        file_path = os.path.join(folder, file)
 
-    df = pd.read_csv(path)
+        df = pd.read_csv(file_path)
 
-    print("\n" + "="*50)
-    print(f"FILE: {file}")
-    print("="*50)
+        print("=" * 60)
+        print(f"FILE: {file}")
+        print("=" * 60)
 
-    print("Shape:", df.shape)
+        print("\nShape:")
+        print(df.shape)
 
-    print("\nColumns:")
-    print(df.columns.tolist())
+        print("\nData Types:")
+        print(df.dtypes)
 
-    print("\nMissing Values:")
-    print(df.isnull().sum())
+        print("\nMissing Values:")
+        print(df.isnull().sum())
 
-    print("\nFirst 5 Rows:")
-    print(df.head())
+        print("\nFirst 5 Rows:")
+        print(df.head())
+
+        print("\n")
+
+    except Exception as e:
+        print(f"Error reading {file}: {e}")
